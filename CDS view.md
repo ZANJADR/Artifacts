@@ -8,6 +8,7 @@
 *----------------------------------------------------------------------
 * 10/16/2026 | PARASAR          |                | Using 'ContractAccount'
 * to CDS View 'ZI_BPEM_CA_JOINT_INV_STATUS' to find the Joint vs Single              
+* 10/27/2026 |                  |                | Added ServiceProviderType via ZI_bpem_servprov_type
 ***********************************************************************/
 @AbapCatalog.viewEnhancementCategory: [#NONE]
 @AccessControl.authorizationCheck: #NOT_REQUIRED
@@ -25,6 +26,8 @@ define view entity ZI_bpem_inst_contract_data
   //  association [0..1] to ZI_BPEM_CA_JOINT_INV_STATUS as _JointInvoiceStatus     on  $projection.UtilitiesContract = _JointInvoiceStatus.UtilitiesContract
   association [0..1] to ZI_BPEM_CA_JOINT_INV_STATUS as _JointInvoiceStatus     on  $projection.ContractAccount = _JointInvoiceStatus.ContractAccount
 // End of change PARASAR-AI_BPEM Project
+  association [0..1] to ZI_bpem_servprov_type as _ServProvType
+    on $projection.UtilitiesServiceProvider = _ServProvType.UtilitiesServiceProvider
 {
   key UtilitiesContract,
       UtilitiesAccountDetnCode,
@@ -33,6 +36,7 @@ define view entity ZI_bpem_inst_contract_data
       _BillgBlockReasonT.UtilsBillgBlockReasonName      as UtilsBillgBlockReasonName,
       UtilitiesInstallation,
       UtilitiesServiceProvider,
+      _ServProvType.ServiceProviderType                 as ServiceProviderType,
       ContractAccount,
       cast( UtilitiesMoveInDate as abap.char(10))       as UtilitiesMoveInDate,
       cast( UtilitiesMoveOutDate as abap.char(10))      as UtilitiesMoveOutDate,
@@ -42,7 +46,8 @@ define view entity ZI_bpem_inst_contract_data
       cast( UtilsContractCreationDate as abap.char(10)) as UtilsContractCreationDate,
       UtilsContractCreatedByUser,
       _ContractAccountPartner,
-      _JointInvoiceStatus
+      _JointInvoiceStatus,
+      _ServProvType
 }
 where
   UtilitiesInstallation is not null
