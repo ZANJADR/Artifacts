@@ -1,0 +1,42 @@
+@AbapCatalog.viewEnhancementCategory: [#NONE]
+@AccessControl.authorizationCheck: #NOT_REQUIRED
+@EndUserText.label: 'BPEM Installation History Data'
+@Metadata.ignorePropagatedAnnotations: true
+define view entity ZI_bpem_installation_hist_data
+  as select from I_UtilitiesInstallationHist as UtilitiesInstallationHist
+//  association [0..*] to ZI_bpem_inst_contract_data  as _UtilitiesContract on  $projection.UtilitiesInstallation = _UtilitiesContract.UtilitiesInstallation //MOD 001--
+  association [0..*] to ZI_CE_BPEM_INST_CONTRACT_DATA as _UtilitiesContract on $projection.UtilitiesInstallation = _UtilitiesContract.UtilitiesInstallation  //MOD 001++
+  association [0..1] to I_UtilitiesRateCategoryText as _RateCatText       on  $projection.UtilitiesRateCategory = _RateCatText.UtilitiesRateCategory
+                                                                          and _RateCatText.Language             = $session.system_language
+  association [0..1] to I_UtilsBillingClassesT      as _BillingClsText    on  $projection.UtilitiesBillingClass = _BillingClsText.UtilitiesBillingClass
+                                                                          and _BillingClsText.Language          = $session.system_language
+  association [0..1] to I_UtilsInstGroupRoleText    as _GrpRoleText       on  $projection.UtilsInstallationGroupRole = _GrpRoleText.UtilsInstallationGroupRole
+                                                                          and _GrpRoleText.Language                  = $session.system_language
+  association [0..1] to I_UtilsInstGroupTypeText    as _GrpRoleType       on  $projection.UtilsInstallationGroupType = _GrpRoleType.UtilsInstallationGroupType
+                                                                          and _GrpRoleType.Language                  = $session.system_language
+
+
+{
+  key UtilitiesInstallation,
+  key cast( UtilsInstHistValidityEndDate as abap.char(10) )   as UtilsInstHistValidityEndDate,
+      cast( UtilsInstHistValidityStartDate as abap.char(10) ) as UtilsInstHistValidityStartDate,
+      UtilitiesRateCategory,
+      _RateCatText.UtilitiesRateCategoryName                  as UtilitiesRateCategoryName,
+      UtilitiesBillingClass,
+      _BillingClsText.UtilitiesBillingClassName               as UtilitiesBillingClassName,
+      MeterReadingUnit,
+      PrimaryUtilitiesInstallation,
+      UtilsInstallationGroupRole,
+      _GrpRoleText.UtilsInstallationGroupRoleName             as UtilsInstallationGroupRoleName,
+      UtilsInstallationGroupType,
+      _GrpRoleType.UtilsInstallationGroupTypeName             as UtilsInstallationGroupTypeName,
+      _UtilitiesContract
+}
+where
+     UtilitiesBillingClass = '3PP'
+  or UtilitiesBillingClass = 'ADDF'
+  or UtilitiesBillingClass = 'EGS'
+  or UtilitiesBillingClass = 'ERES'
+  or UtilitiesBillingClass = 'ESTU'
+  or UtilitiesBillingClass = 'GAS'
+  or UtilitiesBillingClass = 'WATR'
