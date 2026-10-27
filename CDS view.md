@@ -33,6 +33,7 @@ define view entity ZI_bpem_inst_contract_data
       _BillgBlockReasonT.UtilsBillgBlockReasonName      as UtilsBillgBlockReasonName,
       UtilitiesInstallation,
       UtilitiesServiceProvider,
+      UtilitiesServiceProvider                        as ServiceProvider,
       ContractAccount,
       cast( UtilitiesMoveInDate as abap.char(10))       as UtilitiesMoveInDate,
       cast( UtilitiesMoveOutDate as abap.char(10))      as UtilitiesMoveOutDate,
