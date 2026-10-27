@@ -78,6 +78,17 @@ available for these details in this change. A public SAP documentation fetch was
 unsuccessful. Accordingly, no concrete `CALL FUNCTION` parameters, SAP return
 components, lookup tables, or text columns are fabricated in the sources.
 
+Research references (not a substitute for target-system verification):
+
+* A [pinned third-party ABAP call site, `FORM hole_scenario`](https://github.com/abapGitAdmin/ZALL-E10/blob/6135b0e8266f742c233115225538602310ef9a55/src/%23adesso%23isu_tools/%23adesso%23dsc_sperrcockpit/%23adesso%23edisc/%23adesso%23ea_bor_methoden.fugr.%23adesso%23lea_bor_methodenf01.abap)
+  corroborates usage of the requested FM with a structured scenario result.
+  Its description output is commented out. It does not establish the formal
+  interface, language behavior, or compatibility with the target release.
+* Official SAP reference leads: [Point of Delivery](https://help.sap.com/docs/SAP_S4HANA_ON-PREMISE/905da66b76d1449fbe6ac26484842994/c260ce53118d4308e10000000a174cb4.html)
+  and [Using Virtual Elements in CDS Projection Views](https://help.sap.com/docs/abap-cloud/abap-rap/using-virtual-elements-in-cds-projection-views?source=redirect&locale=en-US).
+  Direct retrieval failed; these links are investigation leads, not verified
+  evidence of an FM signature or a specific validity/lookup rule.
+
 Once verified, implement `ZIF_BPEM_SCENARIO_RESOLVER~resolve` as follows:
 
 * Use the supplied installation and the **same explicit key date** for the PoD,
