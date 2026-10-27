@@ -1,0 +1,26 @@
+@EndUserText.label: 'Custom entity for contract data'
+@ObjectModel.query.implementedBy:'ABAP:ZCL_BPEM_MASTER_DATA'
+define custom entity ZI_CE_BPEM_INST_CONTRACT_DATA
+{
+  key UtilitiesContract : abap.char(10);
+      UtilitiesAccountDetnCode : abap.char(2);
+      UtilitiesAccountDetnCodeName : abap.char(50);
+      UtilsBillgBlockReason : abap.char(2);
+      UtilsBillgBlockReasonName  : abap.char(30);
+      UtilitiesInstallation : abap.char(10);
+      UtilitiesServiceProvider : abap.char(10);
+      ContractAccount : abap.char(12);
+      UtilitiesMoveInDate : abap.char(10);
+      UtilitiesMoveOutDate : abap.char(10);
+      ContPaymentPlanType : abap.char(4);
+      ContStartingMonthofPaymentPlan : abap.numc(2);
+      IsOnJointInvoicing : abap.char(30);
+      UtilsContractCreationDate : abap.char(10);
+      UtilsContractCreatedByUser: abap.char(12);
+      ServiceProvider : abap.char(11);
+      SupplyScenario : abap.numc(3);
+      SupplyScenarioDescription : abap.char(60);
+
+ _ContractAccountPartner : association [0..*] to zi_bpem_contract_ac_data on $projection.ContractAccount = _ContractAccountPartner.ContractAccount;
+
+}
